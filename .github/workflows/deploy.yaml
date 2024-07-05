@@ -37,6 +37,6 @@ jobs:
           chmod 600 private_key
           echo "Contents of the build directory:"
           ls -la dist
-          rsync -avz -e "ssh -i private_key -o StrictHostKeyChecking=no" dist/ $USER@$HOST:~/.
+          rsync -avz -e "ssh -i private_key -o StrictHostKeyChecking=no" dist/ root@91.186.197.166:~/.
           ./home/AstonRickAndMorty
           rm private_key
