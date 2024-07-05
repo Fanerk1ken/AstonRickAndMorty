@@ -1,0 +1,41 @@
+name: AstonRickAndMorty
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build the React app
+        run: npm run build
+
+      - name: Verify build directory
+        run: ls -la dist
+
+      - name: Deploy to server
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        run: |
+          echo "$SSH_PRIVATE_KEY" > private_key
+          chmod 600 private_key
+          echo "Contents of the build directory:"
+          ls -la dist
+          rsync -avz -e "ssh -i private_key -o StrictHostKeyChecking=no" dist/ ${{ secrets.USER }}@${{ secrets
+          .HOST }}:~/.
+          ./home/AstonRickAndMorty
+          rm private_key
