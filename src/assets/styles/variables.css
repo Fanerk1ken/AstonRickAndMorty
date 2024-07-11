@@ -1,3 +1,7 @@
 :root {
-    --bg-color: #333
+    --bg-color: #333;
+    --text-color: #333;
+    --rs-bg-overlay: #333;
+    --rs-input-height-sm: 2rem;
+    --rs-input-height-md: 2.5rem;
 }
