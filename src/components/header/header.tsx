@@ -1,6 +1,8 @@
 import { HStack, Text } from "rsuite";
 import { AuthModal } from "../modals";
 import { useState } from "react";
+import MainLogo from "../main-logo/main-logo.tsx";
+import styles from "../header/header.module.scss";
 
 const Header = () => {
   const [open, setOpen] = useState(false);
@@ -13,17 +15,17 @@ const Header = () => {
     setOpen(false);
   };
   return (
-    <div>
+    <div className={styles.headerContainer}>
       <HStack justifyContent="space-between" alignItems="center">
         <HStack alignItems="center" spacing={10}>
-          <Text size={22}>Дого</Text>
-          <Text size={22}>Избранное</Text>
-          <Text size={22}>История</Text>
+          <MainLogo className={styles.logo} />
+          <Text className={styles.navText}>Favorite</Text>
+          <Text className={styles.navText}>History</Text>
         </HStack>
 
         <HStack>
-          <Text onClick={openModal} size={22}>
-            Войти
+          <Text onClick={openModal} className={styles.signInText} size={22}>
+            Sign in
           </Text>
         </HStack>
       </HStack>

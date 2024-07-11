@@ -1,0 +1,53 @@
+.modalBody {
+  max-width: 25rem;
+  margin: 0 auto;
+}
+
+.modalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 0rem;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.modeButton {
+  flex: 1;
+  text-align: center;
+  font-size: 1rem;
+  font-weight: bold;
+  padding: 0.75rem 1.5rem;
+  transition: all 0.3s ease;
+  border: none;
+  background: none;
+
+  &.active {
+    color: #333;
+    background-color: #fff;
+  }
+
+  &.inactive {
+    color: #bbb;
+    background-color: transparent;
+  }
+}
+
+.logo {
+  width: 2rem;
+  height: 2rem;
+  margin: 0 1rem;
+  flex-shrink: 0;
+}
+
+.input {
+  margin-bottom: 1.25rem;
+}
+
+.lastInput {
+  margin-bottom: 1.875rem;
+}
+
+.submitButton {
+  width: 100%;
+  margin-top: 0.625rem;
+}
