@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Button, Modal, Input, Form } from "rsuite";
 import MainLogo from "./../../main-logo/main-logo.tsx";
 import styles from "./auth-modal.module.scss";
@@ -18,6 +18,11 @@ type FieldText = {
   error?: string;
   placeholder?: string;
   size?: "lg" | "md" | "sm" | "xs";
+};
+
+type SignInData = {
+  email: string;
+  password: string;
 };
 
 const Field = (props: FieldText) => {
@@ -54,7 +59,7 @@ const AuthModal = ({ open, onClose }: AuthModalType) => {
     formState: { errors },
   } = useForm({ defaultValues });
 
-  const onSubmit = (data) => {
+  const onSubmit = (data: SignInData) => {
     if (isLogin) {
       console.log("Login data:", data);
     } else {
@@ -89,7 +94,7 @@ const AuthModal = ({ open, onClose }: AuthModalType) => {
       </Modal.Header>
 
       <Modal.Body>
-        <Form onSubmit={handleSubmit(onSubmit)}>
+        <Form onSubmit={() => handleSubmit(onSubmit)}>
           <div className={styles.input}>
             {!isLogin && (
               <div className={styles.input}>
@@ -102,9 +107,10 @@ const AuthModal = ({ open, onClose }: AuthModalType) => {
                     },
                   }}
                   control={control}
-                  render={({ field, fieldState }) => (
+                  render={({ field }) => (
                     <Field
                       {...field}
+                      type={"text"}
                       error={errors[field.name]?.message}
                       placeholder="Enter your username"
                       size="sm"
@@ -127,9 +133,10 @@ const AuthModal = ({ open, onClose }: AuthModalType) => {
                 },
               }}
               control={control}
-              render={({ field, fieldState }) => (
+              render={({ field }) => (
                 <Field
                   {...field}
+                  type={"text"}
                   error={errors[field.name]?.message}
                   placeholder="Enter your email"
                   size="sm"
@@ -152,7 +159,7 @@ const AuthModal = ({ open, onClose }: AuthModalType) => {
                 },
               }}
               control={control}
-              render={({ field, fieldState }) => (
+              render={({ field }) => (
                 <Field
                   {...field}
                   type="password"
