@@ -15,7 +15,8 @@ const SignIn = () => {
   } = useForm<SignInData>();
   const dispatch = useAppDispatch();
 
-  const onSubmit = (data: SignInData) => {
+  const onSubmit = (data: SignInData, e?: React.BaseSyntheticEvent) => {
+    e?.preventDefault();
     dispatch(signInAsync(data));
   };
 
@@ -64,6 +65,9 @@ const SignIn = () => {
             />
           )}
         />
+        {errors.email && (
+          <p className={styles.error}>{errors.password?.message}</p>
+        )}
       </div>
       <Button
         appearance="primary"

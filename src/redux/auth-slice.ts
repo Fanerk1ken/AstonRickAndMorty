@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { signUp } from "../main.tsx";
 import { signIn } from "../main.tsx";
 
@@ -11,8 +11,8 @@ const initialState: authSlice = {
 };
 
 type SignInPayload = {
-  email: "";
-  password: "";
+  email: string;
+  password: string;
 };
 
 export const signInAsync = createAsyncThunk(
