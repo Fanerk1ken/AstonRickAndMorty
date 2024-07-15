@@ -4,7 +4,7 @@ import App from "./App.tsx";
 import "rsuite/dist/rsuite.min.css";
 import "./assets/styles/variables.css";
 import "./main.css";
-import { store } from "./app/store";
+import { store } from "./app/store.ts";
 import { Provider } from "react-redux";
 import { initializeApp } from "firebase/app";
 import {

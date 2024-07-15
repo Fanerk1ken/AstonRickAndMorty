@@ -1,5 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
 import { signUp } from "../main.tsx";
 import { signIn } from "../main.tsx";
 
@@ -16,21 +15,43 @@ type SignInPayload = {
   password: "";
 };
 
+export const signInAsync = createAsyncThunk(
+  "auth/signIn",
+  async ({ email, password }: SignInPayload, { dispatch }) => {
+    try {
+      await signIn(email, password);
+      dispatch(signInSuccess());
+    } catch (error) {
+      console.error("Error during sign in", error);
+    }
+  },
+);
+
+export const signUpAsync = createAsyncThunk(
+  "auth/signUp",
+  async ({ email, password }: SignInPayload, { dispatch }) => {
+    try {
+      await signUp(email, password);
+      dispatch(signUpSuccess());
+    } catch (error) {
+      console.error("Error during sign up", error);
+    }
+  },
+);
+
 export const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    signInReducer: (state, action: PayloadAction<SignInPayload>) => {
-      signIn(action.payload.email, action.payload.password);
+    signInSuccess: (state) => {
       state.value = true;
     },
-    signUpReducer: (state, action: PayloadAction<SignInPayload>) => {
-      signUp(action.payload.email, action.payload.password);
+    signUpSuccess: (state) => {
       state.value = true;
     },
   },
 });
 
-export const { signInReducer, signUpReducer } = authSlice.actions;
+export const { signInSuccess, signUpSuccess } = authSlice.actions;
 
 export default authSlice.reducer;
