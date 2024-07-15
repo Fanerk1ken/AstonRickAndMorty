@@ -1,6 +1,8 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { HomePage } from "./pages";
 import { Header } from "./components";
+import { useSelector } from "react-redux";
+import { getTokenSelector } from "./redux/auth-slice.ts";
 
 const router = createBrowserRouter([
   {
@@ -14,6 +16,9 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
+  const token = useSelector(getTokenSelector);
+  console.log(token);
+
   return (
     <>
       <Header />

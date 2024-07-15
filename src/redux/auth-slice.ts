@@ -1,13 +1,16 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { signUp } from "../main.tsx";
 import { signIn } from "../main.tsx";
+import { RootState } from "../app/store.ts";
 
 export interface authSlice {
   value: boolean;
+  token: string | undefined;
 }
 
 const initialState: authSlice = {
   value: false,
+  token: "",
 };
 
 type SignInPayload = {
@@ -17,10 +20,11 @@ type SignInPayload = {
 
 export const signInAsync = createAsyncThunk(
   "auth/signIn",
-  async ({ email, password }: SignInPayload, { dispatch }) => {
+  async ({ email, password }: SignInPayload) => {
     try {
-      await signIn(email, password);
-      dispatch(signInSuccess());
+      const signInResult = await signIn(email, password);
+      const token = await signInResult?.user.getIdToken();
+      return { token };
     } catch (error) {
       console.error("Error during sign in", error);
     }
@@ -50,8 +54,16 @@ export const authSlice = createSlice({
       state.value = true;
     },
   },
+  extraReducers: (builder) => {
+    builder.addCase(signInAsync.fulfilled, (state, action) => {
+      state.token = action.payload?.token;
+      console.log(action.payload);
+    });
+  },
 });
 
 export const { signInSuccess, signUpSuccess } = authSlice.actions;
+
+export const getTokenSelector = (state: RootState) => state.auth.token;
 
 export default authSlice.reducer;
