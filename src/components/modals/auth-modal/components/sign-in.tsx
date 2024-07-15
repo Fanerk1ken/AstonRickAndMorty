@@ -1,4 +1,4 @@
-import { Button, Form } from "rsuite";
+import { Button } from "rsuite";
 import { Controller } from "react-hook-form";
 import Field from "./field.tsx";
 import styles from "./../auth-modal.module.scss";
@@ -15,13 +15,12 @@ const SignIn = () => {
   } = useForm<SignInData>();
   const dispatch = useAppDispatch();
 
-  const onSubmit = (data: SignInData, e?: React.BaseSyntheticEvent) => {
-    e?.preventDefault();
-    dispatch(signInAsync(data));
-  };
+  const onSubmit = handleSubmit(async (data: SignInData) => {
+    await dispatch(signInAsync(data));
+  });
 
   return (
-    <Form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={onSubmit}>
       <div className={styles.input}>
         <Controller
           name="email"
@@ -76,7 +75,7 @@ const SignIn = () => {
       >
         Sign In
       </Button>
-    </Form>
+    </form>
   );
 };
 

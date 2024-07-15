@@ -8,8 +8,8 @@ import { store } from "./app/store.ts";
 import { Provider } from "react-redux";
 import { initializeApp } from "firebase/app";
 import {
-  getAuth,
   createUserWithEmailAndPassword,
+  getAuth,
   signInWithEmailAndPassword,
 } from "firebase/auth";
 
@@ -25,7 +25,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-export function signUp(email: string, password: string) {
+export async function signUp(email: string, password: string) {
   createUserWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       const user = userCredential.user;
@@ -38,17 +38,12 @@ export function signUp(email: string, password: string) {
     });
 }
 
-export function signIn(email: string, password: string) {
-  signInWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      const user = userCredential.user;
-      console.log(user);
-    })
-    .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      console.log(errorCode, errorMessage);
-    });
+export async function signIn(email: string, password: string) {
+  try {
+    return await signInWithEmailAndPassword(auth, email, password);
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
