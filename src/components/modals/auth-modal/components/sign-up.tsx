@@ -20,7 +20,8 @@ const SignUp = () => {
   });
   const dispatch = useAppDispatch();
 
-  const onSubmit = (data: SignInData) => {
+  const onSubmit = (data: SignInData, e?: React.BaseSyntheticEvent) => {
+    e?.preventDefault();
     dispatch(signUpAsync(data));
   };
 
@@ -30,7 +31,7 @@ const SignUp = () => {
         <Controller
           name="email"
           control={control}
-          defaultValue="" // Ensure the input is controlled from the start
+          defaultValue=""
           rules={{
             required: "Please enter your email",
             pattern: {
@@ -53,7 +54,7 @@ const SignUp = () => {
         <Controller
           name="password"
           control={control}
-          defaultValue="" // Ensure the input is controlled from the start
+          defaultValue=""
           rules={{
             required: "Please enter your password",
             minLength: {
@@ -71,6 +72,9 @@ const SignUp = () => {
             />
           )}
         />
+        {errors.email && (
+          <p className={styles.error}>{errors.password?.message}</p>
+        )}
       </div>
       <Button
         appearance="primary"
